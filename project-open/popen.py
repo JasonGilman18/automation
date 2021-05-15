@@ -9,7 +9,7 @@ def main():
     parser.set_defaults(which="none")
     subparsers = parser.add_subparsers(help="command help")
 
-    filename = "projects.dill"
+    filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), "popen.data")
     project_names = []
     try:
         projects_file = open(filename, "rb")
@@ -72,7 +72,7 @@ def add_project(name):
         else:
             print("\n")
 
-    filename = "projects.dill"
+    filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), "popen.data")
     try:
         projects_file = open(filename, "rb")
         projects_dict = dill.load(projects_file)
@@ -92,7 +92,8 @@ def add_project(name):
 
 
 def open_project(name):
-    projects_dict = dill.load(open("projects.dill", "rb"))
+    filename =os.path.join(os.path.dirname(os.path.abspath(__file__)), "popen.data")
+    projects_dict = dill.load(open(filename, "rb"))
     program_file_tuples = projects_dict[name]
     for tuple in program_file_tuples:
         os.system('open -a \"{}\" \"{}\"'.format(get_path(tuple[0]), get_path(tuple[1])))
